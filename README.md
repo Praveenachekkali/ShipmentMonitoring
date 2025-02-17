@@ -64,3 +64,25 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Steps to run the Demo
+
+- clone the repos
+- composer update :s to install dependencies
+- .env is missing (Either rename exisitng or create new)
+- create sqlite db in database folder
+- php artisan serve
+- php artisan migrate:refresh
+- php artisan db:seed
+- php artisan db:seed --class=ShipmentsTableSeeder
+
+## API's to check in localhost
+
+- http://localhost:8000/api/shipments
+- http://localhost:8000/api/shipment-status?device_id=D001
+- http://localhost:8000/api/temperature-deviation?device_id=D001
+- http://localhost:8000/api/shipments/import
+
+  ## Command to run tests
+
+  - php artisan test
