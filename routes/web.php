@@ -7,6 +7,7 @@ use App\Http\Controllers\TemperatureDeviationEvaluationController;
 use App\Http\Controllers\DataIngestionController;
 
 use Illuminate\Http\Request;
+use App\Jobs\ProcessRabbitMQMessage;
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,4 +31,11 @@ Route::prefix('api')->group(function () {
 
 Route::prefix('api')->group(function () {
     Route::get('/temperature-deviation', [TemperatureDeviationEvaluationController::class,'evaluateTemperatureDeviation'])->name('shipment.evaluateTemperatureDeviation');
+});
+
+
+Route::get('/send-message', function () {
+    ProcessRabbitMQMessage::dispatch();
+    
+    return "Message sent to RabbitMQ!";
 });

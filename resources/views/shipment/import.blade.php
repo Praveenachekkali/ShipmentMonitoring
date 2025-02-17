@@ -6,10 +6,11 @@
             <button type="submit">Import CSV</button>
         </form>
         <div class="shipments"
+                <h1>ShipID$Temp$DevID$TimeStamp</h1>
                 @foreach ($shipments as $shipment)
                     <div class="shipment">
                         <div class="shipment-body">
-                            {{ $shipment->shipment_id." ".$shipment->latitude." ".$shipment->longitude." ".$shipment->temperature." ".$shipment->device_id}}
+                            {{ $shipment->shipment_id."$".$shipment->temperature."$".$shipment->device_id."$".$shipment->timestamp}}
                         </div>
                     </div>
                 @endforeach            

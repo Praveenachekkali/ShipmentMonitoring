@@ -12,6 +12,7 @@ class ShipmentStatus extends Model
 
     protected $fillable = [
         'shipment_id',
+        'device_id',
         'status',
     ];
 

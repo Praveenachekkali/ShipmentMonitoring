@@ -3,20 +3,26 @@ namespace App\Http\Controllers;
 
 use App\Services\TemperatureDeviationEvaluationService;
 use Illuminate\Http\Request;
+use App\Jobs\TemperatureUpdate;
+
 
 class TemperatureDeviationEvaluationController extends Controller
 {
     public function evaluateTemperatureDeviation(Request $request)
     {
-        $shipmentId = $request->input('shipment_id');
+        $deviceId = $request->input('device_id');
+        //dd($deviceId);
         $temperatureDeviationEvaluationService = new TemperatureDeviationEvaluationService();
-        $temperatureDeviation = $temperatureDeviationEvaluationService->evaluateTemperatureDeviation($shipmentId);
+        $temperatureDeviation = $temperatureDeviationEvaluationService->evaluateTemperatureDeviation(deviceId: $deviceId);
         //return response()->json(['message' => $temperatureDeviation]);
-        //if($shipmentStatus == 'Temperature excursion detected'){ //Send Real time update if Temperature excursion detected
-        //    return to_route('shipment.sendRealTimeUpdate');
-        //}
+        $pos = stripos($temperatureDeviation, 'Temperature excursion detected');
+        if($pos !== false){
+            $status = 'Temperature excursion detected';
+            //dd($status);
+            TemperatureUpdate::dispatch();
+        }
         return response()->json([
-            'shipment_id' => $shipmentId,
+            'device_id' => $deviceId,
             'temperature_deviation' => $temperatureDeviation,
         ]);
     }

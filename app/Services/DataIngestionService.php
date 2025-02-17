@@ -3,6 +3,9 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
+use App\Models\Shipment;
+use App\Models\ShipmentStatus;
+use App\Models\TemperatureDeviation;
 use Illuminate\Support\Facades\Storage;
 
 class DataIngestionService
@@ -25,5 +28,32 @@ class DataIngestionService
                 'updated_at' => now(),
             ]);
         }
+
+        // Get the newly created shipments
+        $shipments = Shipment::all();
+
+        // Insert data into the shipment_status table
+        $shipment_statuses = [];
+        foreach ($shipments as $shipment) {
+             $shipment_statuses[] = [
+            'device_id' => $shipment->device_id,
+            'status' => 'on_time',
+            'created_at' => now(),
+            'updated_at' => now(),
+            ];
+        }
+        ShipmentStatus::insert($shipment_statuses);
+
+        // Insert data into the shipment_status table
+        $temperature_deviations = [];
+        foreach ($shipments as $shipment) {
+             $shipment_statuses[] = [
+            'device_id' => $shipment->device_id,
+            'temperature' => $shipment->temperature,
+            'created_at' => now(),
+            'updated_at' => now(),
+            ];
+        }
+        TemperatureDeviation::insert($temperature_deviations);
     }
 }

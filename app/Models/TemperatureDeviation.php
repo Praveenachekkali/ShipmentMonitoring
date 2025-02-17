@@ -11,7 +11,7 @@ class TemperatureDeviation extends Model
     use HasFactory;
 
     protected $fillable = [
-        'shipment_id',
+        'device_id',
         'temperature',
     ];
 

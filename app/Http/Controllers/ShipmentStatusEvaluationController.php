@@ -3,21 +3,26 @@ namespace App\Http\Controllers;
 
 use App\Services\ShipmentStatusEvaluationService;
 use Illuminate\Http\Request;
+use App\Jobs\StatusUpdate;
 
 class ShipmentStatusEvaluationController extends Controller
 {
     public function evaluateShipmentStatus(Request $request)
     {
-        $shipmentId = $request->input('shipment_id');
-        //dd($shipmentId);
+        $deviceId = $request->input('device_id');
+        //dd($deviceId);
         $shipmentStatusEvaluationService = new ShipmentStatusEvaluationService();
-        $shipmentStatus = $shipmentStatusEvaluationService->evaluateShipmentStatus($shipmentId);
-        //return response()->json(['message' => $shipmentStatus]);
-        //if($shipmentStatus == 'delayed Delivery'){ //Send Real time update if Delayed Devlivery
-        //    return to_route('shipment.sendRealTimeUpdate');
-        //}
+        $shipmentStatus = $shipmentStatusEvaluationService->evaluateShipmentStatus(deviceId: $deviceId);
+        $pos = stripos($shipmentStatus, 'delayed Delivery');
+        //dd($shipmentStatus);
+        //dd($pos);
+        if($pos !== false){
+            $status = 'delayed Delivery';
+            //dd($status);
+            StatusUpdate::dispatch();
+        }
         return response()->json([
-            'shipment_id' => $shipmentId,
+            'device_id' => $deviceId,
             'shipment_status' => $shipmentStatus,
         ]);
     }
