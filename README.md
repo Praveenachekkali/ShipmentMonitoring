@@ -67,8 +67,8 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ## Steps to run the Demo
 
-- clone the repos
-- composer update :s to install dependencies
+- clone the repo
+- composer update : to install dependencies
 - .env is missing (Either rename exisitng or create new)
 - create sqlite db in database folder
 - php artisan serve
@@ -85,4 +85,4 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
   ## Command to run tests
 
-  - php artisan test
+- php artisan test
